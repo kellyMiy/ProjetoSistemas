@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjetoSistemas</string>
+    <string name="app_name">Meus Lembretes</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

@@ -7,7 +7,7 @@
     tools:context=".CadLembrete">
 
     <EditText
-        android:id="@+id/DataConclusao"
+        android:id="@+id/txtDataConclusao"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:clickable="true"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.543" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/txtTitulo"
         android:layout_width="297dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -37,9 +37,10 @@
         app:layout_constraintVertical_bias="0.18" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnSalvar"
         android:layout_width="186dp"
         android:layout_height="59dp"
+        android:backgroundTint="#8BC34A"
         android:onClick="BotaoSalvar"
         android:text="Salvar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +51,7 @@
         app:layout_constraintVertical_bias="0.708" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/txtDescricao"
         android:layout_width="302dp"
         android:layout_height="112dp"
         android:ems="10"
@@ -61,8 +62,8 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.449"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.327" />
 </androidx.constraintlayout.widget.ConstraintLayout>
