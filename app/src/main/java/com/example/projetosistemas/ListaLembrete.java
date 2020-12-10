@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,15 +30,21 @@ import java.util.ArrayList;
 
 public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.LembreteAdapterCallback {
 
-    ListView listView;
     Usuario usuarioLogado;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_lembrete);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Intent intent = getIntent();
         this.usuarioLogado = (Usuario) intent.getSerializableExtra("usuarioLogado");
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        findViewById(R.id.btnNovo).clearFocus();
 
         buscarLembretes();
     }
@@ -45,7 +53,7 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
         Intent jan = new Intent(ListaLembrete.this, CadLembrete.class);
         jan.putExtra("usuarioLogado", this.usuarioLogado);
         startActivity(jan);
-        //finish();
+        finish();
     }
 
     private void buscarLembretes() {
@@ -123,6 +131,7 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
         jan.putExtra("usuarioLogado", this.usuarioLogado);
         jan.putExtra("lembreteEdicao", lembrete);
         startActivity(jan);
+        finish();
     }
 
     @Override

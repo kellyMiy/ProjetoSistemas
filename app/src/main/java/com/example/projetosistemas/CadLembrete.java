@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,7 @@ import java.util.Locale;
 
 public class CadLembrete extends AppCompatActivity {
 
+    Toolbar toolbar;
     final private Calendar myCalendar = Calendar.getInstance();
     final private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", new Locale("pt", "BR"));
     private Usuario usuarioLogado;
@@ -38,6 +40,11 @@ public class CadLembrete extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cad_lembrete);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         this.usuarioLogado = (Usuario) intent.getSerializableExtra("usuarioLogado");
         if (intent.hasExtra("lembreteEdicao")) {
@@ -46,7 +53,9 @@ public class CadLembrete extends AppCompatActivity {
             ((EditText) findViewById(R.id.txtDescricao)).setText(this.lembreteEdicao.getDescricao());
             ((EditText) findViewById(R.id.txtDataConclusao)).setText(sdf.format(this.lembreteEdicao.getDataConclusao()));
         }
+
     }
+
 
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -104,7 +113,7 @@ public class CadLembrete extends AppCompatActivity {
                         Intent jan = new Intent(CadLembrete.this, ListaLembrete.class);
                         jan.putExtra("usuarioLogado", usuarioLogado);
                         startActivity(jan);
-                        //finish();
+                        finish();
                     }
                 }, new Response.ErrorListener() {
             private AlertDialog dialog;

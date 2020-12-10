@@ -1,16 +1,21 @@
 package com.example.projetosistemas;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class LembreteAdapter extends ArrayAdapter<Lembrete> {
@@ -30,6 +35,8 @@ public class LembreteAdapter extends ArrayAdapter<Lembrete> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linha, parent, false);
+        MaterialCardView currCardView = (MaterialCardView) rowView;
+        currCardView.setCardBackgroundColor(trocarCor(rowView.getContext(), elementos.get(position).getDataConclusao()));
         TextView titulo = (TextView) rowView.findViewById(R.id.lblTitulo);
         TextView descricao = (TextView) rowView.findViewById(R.id.lblDescricao);
         TextView dataConclusao = (TextView) rowView.findViewById(R.id.lblDataConclusao);
@@ -59,6 +66,21 @@ public class LembreteAdapter extends ArrayAdapter<Lembrete> {
         });
 
         return rowView;
+    }
+
+    private ColorStateList trocarCor(Context context, Date dataConclusao) {
+        long diferenca = dataConclusao.getTime() - new Date().getTime();
+        int difHoras = Math.round(diferenca / (1000 * 3600));
+        ColorStateList retorno;
+
+        if (difHoras >= 98) {
+            retorno = ContextCompat.getColorStateList(context, R.color.verde);
+        } else if (difHoras >= 0) {
+            retorno = ContextCompat.getColorStateList(context, R.color.amarelo);
+        } else {
+            retorno = ContextCompat.getColorStateList(context, R.color.vermelho);
+        }
+        return retorno;
     }
 
     public interface LembreteAdapterCallback {

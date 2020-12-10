@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+    }
+
+    public void CadastrarUsuario(View v) {
+        Intent jan = new Intent(MainActivity.this, CadUsuario.class);
+        startActivity(jan);
+        finish();
     }
 
     public void BotaoLogin(View v) {
@@ -44,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
                         Intent jan = new Intent(MainActivity.this, ListaLembrete.class);
                         jan.putExtra("usuarioLogado", usuarioLogado);
                         startActivity(jan);
-                        //finish();
+                        finish();
                     }
                 }, new Response.ErrorListener() {
             private AlertDialog dialog;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog = new AlertDialog.Builder(MainActivity.this) // Pass a reference to your main activity here
+                dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Erro")
                         .setMessage("Credenciais inválidas!")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -64,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
-
-        // Add the request to the RequestQueue.
         queue.add(jsonRequest);
     }
 
