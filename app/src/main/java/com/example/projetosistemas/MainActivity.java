@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +33,16 @@ public class MainActivity extends AppCompatActivity {
     public void CadastrarUsuario(View v) {
         Intent jan = new Intent(MainActivity.this, CadUsuario.class);
         startActivity(jan);
-        finish();
     }
 
     public void BotaoLogin(View v) {
         final TextView email = findViewById(R.id.txtEmail);
         final TextView senha = findViewById(R.id.txtSenha);
         final Usuario usuario = new Usuario(null, email.getText().toString(), senha.getText().toString());
-        // Instantiate the RequestQueue.
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:3000/api/login";
 
-        // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, usuario.toJSONObject(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 }, new Response.ErrorListener() {
-            private AlertDialog dialog;
 
             @Override
             public void onErrorResponse(VolleyError error) {

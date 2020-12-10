@@ -30,7 +30,7 @@ import java.util.Locale;
 
 public class CadLembrete extends AppCompatActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
     final private Calendar myCalendar = Calendar.getInstance();
     final private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", new Locale("pt", "BR"));
     private Usuario usuarioLogado;
@@ -53,17 +53,13 @@ public class CadLembrete extends AppCompatActivity {
             ((EditText) findViewById(R.id.txtDescricao)).setText(this.lembreteEdicao.getDescricao());
             ((EditText) findViewById(R.id.txtDataConclusao)).setText(sdf.format(this.lembreteEdicao.getDataConclusao()));
         }
-
     }
-
-
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -73,7 +69,6 @@ public class CadLembrete extends AppCompatActivity {
     };
 
     public void onDateClick(View v) {
-        // TODO Auto-generated method stub
         new DatePickerDialog(this, date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -105,7 +100,6 @@ public class CadLembrete extends AppCompatActivity {
         Lembrete lembrete = new Lembrete(null, titulo.getText().toString(), descricao.getText().toString(),
                 new Date(), sdf.parse(dataConclusao.getText().toString()), this.usuarioLogado);
 
-        // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(method, url, lembrete.toJSONObject(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -120,7 +114,7 @@ public class CadLembrete extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog = new AlertDialog.Builder(CadLembrete.this) // Pass a reference to your main activity here
+                dialog = new AlertDialog.Builder(CadLembrete.this)
                         .setTitle("Erro")
                         .setMessage("Erro inesperado ao realizar o cadastro do lembrete")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -133,7 +127,6 @@ public class CadLembrete extends AppCompatActivity {
             }
         });
 
-        // Add the request to the RequestQueue.
         queue.add(jsonRequest);
     }
 

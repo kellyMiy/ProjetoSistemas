@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,13 +29,14 @@ import java.util.ArrayList;
 
 public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.LembreteAdapterCallback {
 
-    Usuario usuarioLogado;
-    Toolbar toolbar;
+    private AlertDialog dialog;
+    private Usuario usuarioLogado;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_lembrete);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Intent intent = getIntent();
         this.usuarioLogado = (Usuario) intent.getSerializableExtra("usuarioLogado");
 
@@ -53,14 +53,12 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
         Intent jan = new Intent(ListaLembrete.this, CadLembrete.class);
         jan.putExtra("usuarioLogado", this.usuarioLogado);
         startActivity(jan);
-        finish();
     }
 
     private void buscarLembretes() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:3000/api/tarefas/" + this.usuarioLogado.getId();
 
-        // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -82,7 +80,7 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
 
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    dialog = new AlertDialog.Builder(ListaLembrete.this) // Pass a reference to your main activity here
+                                    dialog = new AlertDialog.Builder(ListaLembrete.this)
                                             .setTitle("Titulo")
                                             .setMessage("Item: " + view.getTag())
                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -101,7 +99,7 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog = new AlertDialog.Builder(ListaLembrete.this) // Pass a reference to your main activity here
+                dialog = new AlertDialog.Builder(ListaLembrete.this)
                         .setTitle("Erro")
                         .setMessage("Credenciais inválidas!")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -116,7 +114,6 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
             private AlertDialog dialog;
         });
 
-        // Add the request to the RequestQueue.
         queue.add(jsonRequest);
     }
 
@@ -131,7 +128,6 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
         jan.putExtra("usuarioLogado", this.usuarioLogado);
         jan.putExtra("lembreteEdicao", lembrete);
         startActivity(jan);
-        finish();
     }
 
     @Override
@@ -139,7 +135,6 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:3000/api/tarefas/" + lembrete.getId();
 
-        // Request a string response from the provided URL.
         StringRequest jsonRequest = new StringRequest(Request.Method.DELETE, url,
                 new Response.Listener<String>() {
                     @Override
@@ -147,11 +142,10 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
                         buscarLembretes();
                     }
                 }, new Response.ErrorListener() {
-            private AlertDialog dialog;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog = new AlertDialog.Builder(ListaLembrete.this) // Pass a reference to your main activity here
+                dialog = new AlertDialog.Builder(ListaLembrete.this)
                         .setTitle("Erro")
                         .setMessage("Erro ao excluir o lembrete!")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -164,7 +158,6 @@ public class ListaLembrete extends AppCompatActivity implements LembreteAdapter.
             }
         });
 
-        // Add the request to the RequestQueue.
         queue.add(jsonRequest);
     }
 }

@@ -55,7 +55,7 @@ public class Lembrete implements Serializable {
 
     public static Lembrete fromJson(JSONObject jsonObject) {
         Lembrete l = new Lembrete();
-        // Deserialize json into object fields
+
         try {
             l.id = jsonObject.getString("_id");
             l.titulo = jsonObject.getString("titulo");
@@ -67,7 +67,6 @@ public class Lembrete implements Serializable {
             e.printStackTrace();
             return null;
         }
-        // Return new object
         return l;
     }
 
@@ -83,13 +82,9 @@ public class Lembrete implements Serializable {
         return dataCadastro;
     }
 
-    ;
-
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-
-    ;
 
     public Usuario getUsuario() {
         return usuario;

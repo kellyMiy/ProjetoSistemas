@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 
 public class CadUsuario extends AppCompatActivity {
-    Toolbar toolbar;
+    private Toolbar toolbar;
     private AlertDialog dialog;
 
     @Override
@@ -46,11 +46,10 @@ public class CadUsuario extends AppCompatActivity {
         }
 
         final Usuario usuario = new Usuario(null, email.getText().toString(), senha.getText().toString());
-        // Instantiate the RequestQueue.
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:3000/api/usuarios";
 
-        // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, usuario.toJSONObject(),
                 new Response.Listener<JSONObject>() {
                     @Override

@@ -21,7 +21,6 @@ public class Usuario implements Serializable {
 
     public static Usuario fromJson(JSONObject jsonObject) {
         Usuario u = new Usuario();
-        // Deserialize json into object fields
         try {
             u.id = jsonObject.getString("_id");
             u.email = jsonObject.getString("email");
@@ -30,7 +29,6 @@ public class Usuario implements Serializable {
             e.printStackTrace();
             return null;
         }
-        // Return new object
         return u;
     }
 
